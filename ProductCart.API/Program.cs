@@ -18,20 +18,20 @@ static void ConfigureServices(IServiceCollection services)
 {
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen(c => c.SwaggerDoc("v1",
-        new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MyProject.Api", Version = "v1" }));
+        new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ProductCart.Api", Version = "v1" }));
     services.AddControllers();
 
 
 
     services.AddMediatR(typeof(Program));
-    services.AddMediatR(typeof(AddProductCommand).GetTypeInfo().Assembly);
-
+    var assembly = AppDomain.CurrentDomain.Load("ProductCart.Data"); 
+    services.AddMediatR(assembly);
+    //services.AddMediatR(typeof(AddProductCommand).GetTypeInfo().Assembly);
+    services.AddSingleton<PostgreDbContext>();
+    services.AddMvc();
     services.AddScoped<ICartService, CartService>();
     services.AddScoped<IProductService, ProductService>();
 
-    services.AddSingleton<PostgreDbContext>();
-    services.AddMvc();
-   
 
 
     var mapperConfig = new MapperConfiguration(mc =>
