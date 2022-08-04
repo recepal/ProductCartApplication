@@ -23,6 +23,8 @@ namespace ProductCart.Data.Queries
         {
             var product = await _context.Products.FirstOrDefaultAsync(f => f.Id == request.ProductId);
 
+            if (product is null) throw new Exception();
+
             return product;
         }
     }

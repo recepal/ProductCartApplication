@@ -19,8 +19,6 @@ namespace ProductCart.Data.Queries
             _context = context;
         }
 
-       
-
         public async Task<Cart> Handle(GetActiveCartQuery request, CancellationToken cancellationToken)
         {
 
