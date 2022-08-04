@@ -20,6 +20,12 @@ namespace ProductCart.Domain.Models
             return this;
         }
 
+        public Cart UpdateAmount(decimal price, int quantity)
+        {
+            TotalAmount += price * quantity;
+
+            return this;
+        }
         #endregion
     }
 }

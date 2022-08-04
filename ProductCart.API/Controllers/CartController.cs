@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductCart.Domain.Requests;
 using ProductCart.Domain.Services;
 
 namespace ProductCart.API.Controllers
@@ -18,10 +19,10 @@ namespace ProductCart.API.Controllers
             return Ok(true);
         }
 
-        //[HttpPost("AddProductToCart")]
-        //public async Task<IActionResult> AddProductToCart(AddProductToCartRequest request)
-        //{
-        //    return Ok(await _cartService.AddProductToCart(request));
-        //}
+        [HttpPost("AddProductToCart")]
+        public async Task<IActionResult> AddProductToCart(AddProductToCartRequest request)
+        {
+            return Ok(await _cartService.AddProductToCart(request));
+        }
     }
 }

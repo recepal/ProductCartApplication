@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace ProductCart.Data.Commands.Cart
 {
-    public class AddProductToCartCommand : IRequest<bool>
+    public class UpdateCartCommand : IRequest<bool>
     {
         public Guid CartId { get; set; }
-        public Guid ProductId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
 
-        public AddProductToCartCommand(Guid cartId, Guid productId, int quantity, decimal price)
+        public UpdateCartCommand(Guid cartId, int quantity, decimal price)
         {
             CartId = cartId;
-            ProductId = productId;
             Quantity = quantity;
             Price = price;
         }

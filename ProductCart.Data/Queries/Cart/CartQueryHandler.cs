@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace ProductCart.Data.Queries
 {
-    public class CartQueryHandler : IRequestHandler<GetActiveCartQuery, CartDto>
+    public class CartQueryHandler : IRequestHandler<GetActiveCartQuery, CartDto>,
+                                    IRequestHandler<GetCartItemsByCartIdQuery, List<CartItemDto>>
     {
         private readonly PostgreDbContext _context;
         private readonly IMapper _mapper;
@@ -30,5 +31,14 @@ namespace ProductCart.Data.Queries
             return cartDto;
         }
 
+        public async Task<List<CartItemDto>> Handle(GetCartItemsByCartIdQuery request, CancellationToken cancellationToken)
+        {
+            var cartItems = await _context.CartItems.Where(f => f.CartId == request.CartId).ToListAsync();
+
+            var cartItemDtos = _mapper.Map<List<CartItemDto>>(cartItems);
+
+            return cartItemDtos;
+
+        }
     }
 }

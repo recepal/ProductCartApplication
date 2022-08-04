@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using ProductCart.Data.Commands;
+using ProductCart.Data.Commands.Cart;
 using ProductCart.Data.Queries;
 using ProductCart.Domain.Dtos;
 using ProductCart.Domain.Exceptions;
@@ -17,10 +19,12 @@ namespace ProductCart.Service.Services
     public class CartService : ICartService
     {
         private readonly IMediator _mediatrHandler;
+        private readonly IMapper _mapper;
 
-        public CartService(IMediator mediatrHandler)
+        public CartService(IMediator mediatrHandler, IMapper mapper)
         {
             _mediatrHandler = mediatrHandler;
+            _mapper = mapper;
         }
 
         public async Task<bool> AddProductToCart(AddProductToCartRequest request)
@@ -32,8 +36,29 @@ namespace ProductCart.Service.Services
                 $"Ürünün stoğu {product.Quantity} adet kalmıştır.");
 
             var cart =await GetActiveCart();
-            //await _mediatrHandler
+
+            AddProductToCartCommand addProductCommand = new AddProductToCartCommand(cart.Id, product.Id, request.Quantity, product.Price);
+            await _mediatrHandler.Send(addProductCommand);
+
+            UpdateCartCommand updateCartCommand = new UpdateCartCommand(cart.Id, request.Quantity, product.Price);
+            await _mediatrHandler.Send(updateCartCommand);
+
+            // to do updateCart()
+            // alışveriş sepetinde stoktan düşülmez heralde henüz satın alma gerçekleşmemiş,
+
             return true;
+        }
+
+        public async Task<CartWithItemsDto> GetCartWithItems()
+        {
+            var cart = await GetActiveCart();
+            var items = await _mediatrHandler.Send(new GetCartItemsByCartIdQuery(cart.Id));
+
+            CartWithItemsDto cartWithItemsDto = _mapper.Map<CartWithItemsDto>(cart);
+            cartWithItemsDto.CartItems = items;
+
+            return cartWithItemsDto;
+
         }
 
         private bool StockControl(int requestQuantity, int productQuantity)

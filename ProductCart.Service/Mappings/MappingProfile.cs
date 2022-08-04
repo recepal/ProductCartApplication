@@ -18,7 +18,8 @@ namespace ProductCart.Service.Mappings
             CreateMap<AddProductRequest, AddProductCommand>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<Cart, CartDto>().ReverseMap();
-
+            CreateMap<CartItem, CartItemDto>().ReverseMap();
+            CreateMap<Cart, CartWithItemsDto>().ReverseMap();
         }
     }
 }
