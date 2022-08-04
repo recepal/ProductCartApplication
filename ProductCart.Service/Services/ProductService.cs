@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using ProductCart.Data.Commands;
+using ProductCart.Data.Queries;
+using ProductCart.Domain.Dtos;
 using ProductCart.Domain.Requests;
 using ProductCart.Domain.Services;
 using System;
@@ -25,6 +27,13 @@ namespace ProductCart.Service.Services
         {
             AddProductCommand command = _mapper.Map<AddProductCommand>(request);
             var result = await _mediatrHandler.Send(command);
+            return result;
+        }
+
+        public async Task<ProductDto> GetProductById(Guid id)
+        {
+            var query = new GetProductByIdQuery(id);
+            var result = await _mediatrHandler.Send(query);
             return result;
         }
     }

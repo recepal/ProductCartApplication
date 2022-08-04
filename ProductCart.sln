@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Domain", "Produ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Infrastructure", "ProductCart.Infrastructure\ProductCart.Infrastructure.csproj", "{4E7F2004-E4FD-46D1-B59B-CC736E69323F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCart.Service", "ProductCart.Service\ProductCart.Service.csproj", "{B142AFA8-4B0B-4BA3-B638-210E313F27A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Service", "ProductCart.Service\ProductCart.Service.csproj", "{B142AFA8-4B0B-4BA3-B638-210E313F27A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCart.Data", "ProductCart.Data\ProductCart.Data.csproj", "{AD627649-7244-4936-9FEF-A932707F4843}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Data", "ProductCart.Data\ProductCart.Data.csproj", "{AD627649-7244-4936-9FEF-A932707F4843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCart.Shared", "ProductCart.Shared\ProductCart.Shared.csproj", "{C0F3C133-4885-44FC-994F-EBF5D194ACA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{AD627649-7244-4936-9FEF-A932707F4843}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD627649-7244-4936-9FEF-A932707F4843}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD627649-7244-4936-9FEF-A932707F4843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0F3C133-4885-44FC-994F-EBF5D194ACA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F3C133-4885-44FC-994F-EBF5D194ACA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F3C133-4885-44FC-994F-EBF5D194ACA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F3C133-4885-44FC-994F-EBF5D194ACA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using ProductCart.Data.Commands;
 using ProductCart.Data.Queries;
+using ProductCart.Domain.Dtos;
+using ProductCart.Domain.Exceptions;
 using ProductCart.Domain.Models;
 using ProductCart.Domain.Requests;
 using ProductCart.Domain.Services;
@@ -26,7 +28,9 @@ namespace ProductCart.Service.Services
             var product = await _mediatrHandler.Send(new GetProductByIdQuery(request.ProductId));
 
             var stockResponse = StockControl(request.Quantity, product.Quantity);
-            if(!stockResponse) throw new Exception();
+            if(!stockResponse) throw new ProductIsOutOfStockException("Ürün stoğu aşıldı.", 
+                $"Ürünün stoğu {product.Quantity} adet kalmıştır.");
+
             var cart =await GetActiveCart();
             //await _mediatrHandler
             return true;
@@ -38,7 +42,7 @@ namespace ProductCart.Service.Services
             return true;
         }
 
-        private async Task<Cart> GetActiveCart()
+        private async Task<CartDto> GetActiveCart()
         {
             var cart = await _mediatrHandler.Send(new GetActiveCartQuery());
             if(cart is null)

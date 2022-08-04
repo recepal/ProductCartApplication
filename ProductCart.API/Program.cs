@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using MediatR;
+using ProductCart.API.Middleware;
 using ProductCart.Data.Commands;
 using ProductCart.Domain.Services;
 using ProductCart.Infrastructure.Database;
@@ -56,6 +57,7 @@ static void Configure(WebApplication app, IWebHostEnvironment env)
         });
     }
 
+    app.UseMiddleware<CustomExceptionMiddleware>();
     app.UseRouting();
     app.UseAuthorization();
     app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

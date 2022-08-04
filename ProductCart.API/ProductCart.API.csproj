@@ -15,12 +15,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProductCart.Infrastructure\ProductCart.Infrastructure.csproj" />
     <ProjectReference Include="..\ProductCart.Service\ProductCart.Service.csproj" />
+    <ProjectReference Include="..\ProductCart.Shared\ProductCart.Shared.csproj" />
   </ItemGroup>
 
 </Project>

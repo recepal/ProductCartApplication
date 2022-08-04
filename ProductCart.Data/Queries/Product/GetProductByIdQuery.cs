@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProductCart.Domain.Dtos;
 using ProductCart.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProductCart.Data.Queries
 {
-    public class GetProductByIdQuery : IRequest<Product>
+    public class GetProductByIdQuery : IRequest<ProductDto>
     {
         public Guid ProductId { get; set; }
 

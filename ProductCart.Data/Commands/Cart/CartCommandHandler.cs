@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using ProductCart.Domain.Dtos;
 using ProductCart.Infrastructure.Database;
 using System;
 using System.Collections.Generic;
@@ -9,12 +11,15 @@ using System.Threading.Tasks;
 namespace ProductCart.Data.Commands.Cart
 {
     public class CartCommandHandler : IRequestHandler<AddProductToCartCommand, bool>,
-                                      IRequestHandler<CreateCartCommand,Domain.Models.Cart>
+                                      IRequestHandler<CreateCartCommand,CartDto>
     {
         private readonly PostgreDbContext _context;
-        public CartCommandHandler(PostgreDbContext context)
+        private readonly IMapper _mapper;
+
+        public CartCommandHandler(PostgreDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public Task<bool> Handle(AddProductToCartCommand request, CancellationToken cancellationToken)
@@ -22,14 +27,16 @@ namespace ProductCart.Data.Commands.Cart
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Models.Cart> Handle(CreateCartCommand request, CancellationToken cancellationToken)
+        public async Task<CartDto> Handle(CreateCartCommand request, CancellationToken cancellationToken)
         {
             Domain.Models.Cart cart = new Domain.Models.Cart().CreateCart();
 
             await _context.Carts.AddAsync(cart);
             await _context.SaveChangesAsync();
 
-            return cart;
+            var cartDto = _mapper.Map<CartDto>(cart);
+
+            return cartDto;
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProductCart.Domain.Exceptions
+{
+    public class ProductIsOutOfStockException : BaseException
+    {
+        public ProductIsOutOfStockException(string message, string description) : base(message, description, (int)System.Net.HttpStatusCode.BadRequest)
+        {
+        }
+    }
+}

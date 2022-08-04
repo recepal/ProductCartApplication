@@ -1,4 +1,5 @@
-﻿using ProductCart.Domain.Requests;
+﻿using ProductCart.Domain.Dtos;
+using ProductCart.Domain.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ProductCart.Domain.Services
     public interface IProductService
     {
         Task<bool> AddProduct(AddProductRequest request);
+        Task<ProductDto> GetProductById(Guid id);
     }
 }
