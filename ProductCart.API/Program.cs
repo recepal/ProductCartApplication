@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using ProductCart.API.Middleware;
 using ProductCart.Data.Commands;
 using ProductCart.Domain.Services;
@@ -11,12 +12,14 @@ using ProductCart.Service.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigureServices(builder.Services);
+ConfigureServices(builder);
 var app = builder.Build();
 Configure(app, builder.Environment);
 
-static void ConfigureServices(IServiceCollection services)
+static void ConfigureServices(WebApplicationBuilder builder)
 {
+    IServiceCollection services = builder.Services;
+
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen(c => c.SwaggerDoc("v1",
         new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ProductCart.Api", Version = "v1" }));
@@ -27,13 +30,14 @@ static void ConfigureServices(IServiceCollection services)
     services.AddMediatR(typeof(Program));
     var assembly = AppDomain.CurrentDomain.Load("ProductCart.Data"); 
     services.AddMediatR(assembly);
-    //services.AddMediatR(typeof(AddProductCommand).GetTypeInfo().Assembly);
-    services.AddSingleton<PostgreDbContext>();
+
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    services.AddDbContext<PostgreDbContext>(options =>
+        options.UseNpgsql(connectionString));
+
     services.AddMvc();
     services.AddScoped<ICartService, CartService>();
     services.AddScoped<IProductService, ProductService>();
-
-
 
     var mapperConfig = new MapperConfiguration(mc =>
     {
