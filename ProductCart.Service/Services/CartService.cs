@@ -32,19 +32,16 @@ namespace ProductCart.Service.Services
             var product = await _mediatrHandler.Send(new GetProductByIdQuery(request.ProductId));
 
             var stockResponse = StockControl(request.Quantity, product.Quantity);
-            if(!stockResponse) throw new ProductIsOutOfStockException("Ürün stoğu aşıldı.", 
+            if (!stockResponse) throw new ProductIsOutOfStockException("Ürün stoğu aşıldı.",
                 $"Ürünün stoğu {product.Quantity} adet kalmıştır.");
 
-            var cart =await GetActiveCart();
+            var cart = await GetActiveCart();
 
             AddProductToCartCommand addProductCommand = new AddProductToCartCommand(cart.Id, product.Id, request.Quantity, product.Price);
             await _mediatrHandler.Send(addProductCommand);
 
             UpdateCartCommand updateCartCommand = new UpdateCartCommand(cart.Id, request.Quantity, product.Price);
             await _mediatrHandler.Send(updateCartCommand);
-
-            // to do updateCart()
-            // alışveriş sepetinde stoktan düşülmez heralde henüz satın alma gerçekleşmemiş,
 
             return true;
         }
@@ -70,7 +67,7 @@ namespace ProductCart.Service.Services
         private async Task<CartDto> GetActiveCart()
         {
             var cart = await _mediatrHandler.Send(new GetActiveCartQuery());
-            if(cart is null)
+            if (cart is null)
             {
                 cart = await _mediatrHandler.Send(new CreateCartCommand());
             }

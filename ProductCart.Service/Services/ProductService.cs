@@ -36,5 +36,12 @@ namespace ProductCart.Service.Services
             var result = await _mediatrHandler.Send(query);
             return result;
         }
+
+        public async Task<List<ProductDto>> GetProducts()
+        {
+            var query = new GetProductsQuery();
+            var result = await _mediatrHandler.Send(query);
+            return result;
+        }
     }
 }

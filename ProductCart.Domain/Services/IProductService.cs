@@ -12,5 +12,6 @@ namespace ProductCart.Domain.Services
     {
         Task<bool> AddProduct(AddProductRequest request);
         Task<ProductDto> GetProductById(Guid id);
+        Task<List<ProductDto>> GetProducts();
     }
 }

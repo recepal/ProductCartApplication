@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace ProductCart.Data.Queries
 {
-    public class ProductQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto>
+    public class ProductQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto>,
+                                       IRequestHandler<GetProductsQuery, List<ProductDto>>
     {
         private readonly PostgreDbContext _context;
         private readonly IMapper _mapper;
@@ -31,9 +32,16 @@ namespace ProductCart.Data.Queries
             if (product is null) throw new ProductNotFoundException("Bu ürün bulunamadı",
                    $"ÜrünId:{request.ProductId}");
 
-            var dto = _mapper.Map<ProductDto>(product);
+            var productDto = _mapper.Map<ProductDto>(product);
 
-            return dto;
+            return productDto;
+        }
+
+        public async Task<List<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+        {
+            var products = await _context.Products.ToListAsync();
+            var productDtos = _mapper.Map<List<ProductDto>>(products);
+            return productDtos;
         }
     }
 }

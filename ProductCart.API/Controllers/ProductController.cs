@@ -25,5 +25,11 @@ namespace ProductCart.API.Controllers
         {
             return Ok(await _productService.GetProductById(id));
         }
+
+        [HttpGet("GetProducts")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            return Ok(await _productService.GetProducts());
+        }
     }
 }
