@@ -1,15 +1,12 @@
-
-
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ProductCart.API.Middleware;
-using ProductCart.Data.Commands;
 using ProductCart.Domain.Services;
 using ProductCart.Infrastructure.Database;
 using ProductCart.Service.Mappings;
 using ProductCart.Service.Services;
-using System.Reflection;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureServices(builder);
@@ -34,6 +31,13 @@ static void ConfigureServices(WebApplicationBuilder builder)
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     services.AddDbContext<PostgreDbContext>(options =>
         options.UseNpgsql(connectionString));
+
+    services.AddSingleton<IConnectionMultiplexer>(x =>
+    {
+        var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("RedisHost"), true);
+
+        return ConnectionMultiplexer.Connect(configuration);
+    });
 
     services.AddMvc();
     services.AddScoped<ICartService, CartService>();

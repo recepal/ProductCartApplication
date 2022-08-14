@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Service", "Prod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Data", "ProductCart.Data\ProductCart.Data.csproj", "{AD627649-7244-4936-9FEF-A932707F4843}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCart.Shared", "ProductCart.Shared\ProductCart.Shared.csproj", "{C0F3C133-4885-44FC-994F-EBF5D194ACA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductCart.Shared", "ProductCart.Shared\ProductCart.Shared.csproj", "{C0F3C133-4885-44FC-994F-EBF5D194ACA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Compose", "Docker Compose", "{8B0FA6DE-E260-4E53-941D-C429B5FE5D55}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
