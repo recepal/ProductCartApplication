@@ -58,7 +58,7 @@ namespace ProductCart.Service.Services
         private async Task<List<ProductDto>> GetProductsFromRedis()
         {
             var data = await _redisDatabase.StringGetAsync("Products");
-            return JsonSerializer.Deserialize<List<ProductDto>>(data);
+            return data.IsNull ? null : JsonSerializer.Deserialize<List<ProductDto>>(data);
         }
 
         private async Task SetRedisProducts(List<ProductDto> products)
